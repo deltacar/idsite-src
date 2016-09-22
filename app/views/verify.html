@@ -2,13 +2,13 @@
   <div class="box row">
     <div class="col-sm-12">
       <div class="header">
-        <span ng-show="status=='verified'">Your account has been successfully created</span>
-        <span ng-show="status=='failed'">Sorry, there was an error while verifying your account</span>
+        <span ng-show="status=='verified'">Votre compte a été créé avec succès</span>
+        <span ng-show="status=='failed'">Nous sommes désolés, une erreur s'est produit pendant vérfication de votre compte.</span>
       </div>
       <div class="verified" ng-show="status=='verified'">
         <p>
-          <span>Success!  Your account is ready, please </span>
-          <a href="#/">log in</a>
+          <span>Et voilà ! Votre compte est prêt, veuillez </span>
+          <a href="#/">se connecter</a>
         </p>
       </div>
       <div ng-show="error" class="alert alert-danger">
@@ -16,12 +16,12 @@
       </div>
       <div class="verification-failed" ng-show="status=='failed'">
         <p>
-          <span>Please try again by clicking on the verification link that was sent to your email address.</span>
+          <span>Merci de cliquer de nouveau sur le lien dans email de vérification.</span>
         </p>
         <p>
-          <span>If you continue to have problems you may need to</span>
-          <a href="#/register">register</a>
-          <span>again.</span>
+          <span>Si le problème se reproduit, vous pouvez essayer de </span>
+          <a href="#/register">s'incrire</a>
+          <span>de nouveau.</span>
         </p>
       </div>
     </div>
