@@ -74,6 +74,11 @@ p{
   margin: 0 auto;
   display: block;
 }
+.copyright { clear:both; width:100%; text-align:center; display:block; color:#666; font-size:0.8em; }
+.language-selector { clear: both; width: 100%; text-align: right; display: block; font-size: 16px; margin-bottom: 10px; }
+.language-selector .lang { display: inline-block; padding: 0px 0px 0px 0px; color: #999; cursor: pointer; }
+.language-selector .lang:hover { text-decoration: underline; }
+.language-selector .delimiter { display: inline-block; padding: 0px 1px 0px 1px; color: #ccc; }
 
 .btn-sp-green{
   height: 45px;
@@ -222,9 +227,9 @@ p{
 }
 
 .box{
-  box-shadow: 0 0px 3px 1px rgba(0, 0, 0, 0.1);
+  box-shadow: none;
   border:1px solid #cacaca;
-  border-radius: 3px;
+  border-radius: 0px;
   padding: 0 @boxGutter;
 }
 .sp-form{
