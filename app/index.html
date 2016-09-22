@@ -6,7 +6,7 @@
 <html class="no-js"> <!--<![endif]-->
   <head>
     <meta charset="utf-8">
-    <title>Login</title>
+    <title>DeltaOnline</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
     <link href="//fonts.googleapis.com/css?family=Open+Sans:300italic,300,400italic,400,600italic,600,700italic,700,800italic,800" rel="stylesheet" type="text/css">
@@ -31,9 +31,9 @@
     <script type="text/ng-template" id="views/login.html">
       include "views/login.html"
     </script>
-    <script type="text/ng-template" id="views/registration.html">
-      include "views/registration.html"
-    </script>
+    <!--script type="text/ng-template" id="views/registration.html">
+      donot-include "views/registration.html"
+    </script-->
     <script type="text/ng-template" id="views/forgot.html">
       include "views/forgot.html"
     </script>
@@ -60,10 +60,20 @@
       <div class="logo-container">
         <img ng-show="logoUrl" class="logo img-responsive" ng-src="{{logoUrl}}"/>
       </div>
+      <div class="language-selector">
+        <div class="lang" onclick="setDefaultLocale('fr-FR')">Français</div>
+        <div class="delimiter">|</div>
+        <div class="lang" onclick="setDefaultLocale('de-DE')">Deutsch</div>
+      </div>
       <div ng-show="inError" ng-include="'views/error.html'"></div>
       <div ng-hide="inError" ng-view="">
         <!-- this will be replaced a the view, as determined by the route config in app.js -->
       </div>
+      <div class="copyright">
+        Copyright © <span class="current-year">2017</span> DELTA Car Trade SA. All rights reserved. Tous droits réservés. Sämtliche Rechte vorbehalten.</div>
+      <script type="text/javascript">
+        $('.copyright .current-year').text((new Date()).getFullYear());
+      </script>
     </div>
 
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
@@ -110,11 +120,65 @@
 
     <!-- endbuild -->
     <script type="text/javascript">
-      (function() {
-       var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
-       po.src = 'https://apis.google.com/js/client:plusone.js';
-       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
-     })();
+      var DEFAULT_LOCALE = navigator.languages && navigator.languages.length > 0 && navigator.languages[0] || navigator.language || 'fr-FR';
+      
+      function setDefaultLocale(locale) {
+        DEFAULT_LOCALE = locale;
+        updateMultilang();
+      }
+
+      function updateMultilang() {
+        $('.multilang').each(function() {
+          if ($(this).is(':input')) {
+            if ($(this).attr('placeholder') && $(this).attr('data-placeholder-fr')) {
+              $(this).attr('placeholder', multilang($(this).attr('data-placeholder-fr'), $(this).attr('data-placeholder-de')));  
+            }
+            if ($(this).text() && $(this).attr('data-text-fr')) {
+              $(this).text(multilang($(this).attr('data-text-fr'), $(this).attr('data-text-de')));  
+            }
+          } else {
+            if ($(this).attr('data-text-fr')) {
+              $(this).text(multilang($(this).attr('data-text-fr'), $(this).attr('data-text-de')));
+            }
+          }
+        });
+      }
+
+      // fill data-...-fr as default value
+      function initalizeMultilang() {
+        $('.multilang').each(function() {
+          if ($(this).is(':input')) {
+            if ($(this).attr('placeholder') && $(this).attr('data-placeholder-de')) {
+              $(this).attr('data-placeholder-fr', $(this).attr('placeholder'));  
+            }
+            if ($(this).text() && $(this).attr('data-text-de')) {
+              $(this).attr('data-text-fr', $(this).text());  
+            }
+          } else {
+            if ($(this).attr('data-text-de')) {
+              $(this).attr('data-text-fr', $(this).text());
+            }
+          }
+        }); 
+      }
+
+      function multilang(fr, de) {
+        if (DEFAULT_LOCALE && DEFAULT_LOCALE.indexOf('de') >= 0) {
+          return de;
+        } else {
+          return fr;
+        }
+      }
+
+      $().ready(function() {
+        initalizeMultilang();
+        updateMultilang();
+      });
+
+      window.onhashchange = function() {
+        initalizeMultilang();
+        updateMultilang();
+      }
     </script>
   </body>
 </html>
